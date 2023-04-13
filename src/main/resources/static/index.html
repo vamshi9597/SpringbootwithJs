@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head >
+
+<meta charset="ISO-8859-1">
+<title>STUDENT register</title>
+<link rel="stylesheet" type="text/css" href="./nycss.css">
+  
+
+</head>
+
+<h1 align="center" >ENTER STUDENT DETAILS</h1>
+<form  id="studform">
+       NAME:           <input type="text" id="name" name="name"><br></br>
+        Id:                    <input type="text" id="sid" name="sid"><br></br>
+       AGE:                             <input type="text" id="age" name="age"><br></br>
+<button  onclick="student()">submit</button>
+
+</form>
+<div id="result"></div>
+
+<script type="text/javascript">
+document.getElementById('studform').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get the data from the form input fields
+    var name = document.getElementById('name').value;
+    var sid = document.getElementById('sid').value;
+    var age = document.getElementById('age').value;
+
+    // Create a data object to send in the AJAX request body
+    var data = {
+        "name": name,
+        "sid": sid,
+        "age": age
+    };
+
+    // Make the AJAX POST request to your REST endpoint
+    fetch('/student', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        console.log('Success:', response);
+        document.getElementById("result").innerHTML = "Data saved successfully!";
+        
+        // Do something on success, such as redirect to a confirmation page
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("result").innerHTML = "Error saving data!";
+        
+        
+        // Do something on error, such as display an error message to the user
+    });
+    console.log('Request sent!');
+    
+});
+
+
+
+</script>
+</body>
+</html>
